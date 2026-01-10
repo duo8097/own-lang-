@@ -33,4 +33,4 @@ g++ solve_text.cpp -std=gnu++17 -O2 -o solve_text_cpp
 ---
 
 ## Hướng dẫn
-- [bảng mã](char solve.md)
+- [bảng mã](<char solve.md>)
