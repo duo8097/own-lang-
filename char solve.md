@@ -107,7 +107,11 @@ Liễu Như Yên.
 
 **Input**
 ```text
-oth[#],s0,s9,s14,s3,s12,s21,s4,s5,s0,oth[<],s9,s15,s19,s20,s18,s5,s1,s13,oth[>],oth[\n],s9,s14,s20,s0,s13,s1,s9,s14,oth[(){],oth[\n],oth[tab],s19,s20,s4,oth[::],s3,s15,s21,s20,s0,oth[<<],s0,oth["],s8[cl],s5,s12,s12,s15,s0,s23[cl],s15,s18,s12,s4,oth["],s0,oth[<<],s0,s5,s14,s4,s12,oth[;]),oth[\n],oth[tab],s18,s5,s20,s21,s18,s14,s0,c0,oth[;],oth[\n],oth[}]
+oth[#],s0,s9,s14,s3,s12,s21,s4,s5,s0,oth[<],s9,s15,s19,s20,s18,s5,s1,s13,oth[>]
+s9,s14,s20,s0,s13,s1,s9,s14,oth[(],oth[)],oth[{]
+oth[tab],s19,s20,s4,oth[:],oth[:],s3,s15,s21,s20,s0,oth[<],oth[<],s0,oth["],s8[cl],s5,s12,s12,s15,s0,s23[cl],s15,s18,s12,s4,oth["],s0,oth[<],oth[<],s0,s19,s20,s4,oth[:],oth[:],s5,s14,s4,s12,oth[;]
+oth[tab],s18,s5,s20,s21,s18,s14,s0,c0,oth[;]
+oth[}]
 ```
 **Output**
 ```cpp
