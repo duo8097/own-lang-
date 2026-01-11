@@ -28,8 +28,7 @@ g++ solve_text.cpp -std=gnu++17 -O2 -o solve_text_cpp
 
 ## Dự định
 - phát triển thêm bản python
-- cải tiến để dễ dùng hơn (or not =))
-- tạo thêm bản in & out từ file cho code
+- tạo run.bat cho windows
 ---
 
 ## Hướng dẫn
