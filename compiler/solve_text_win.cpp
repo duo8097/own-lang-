@@ -4,6 +4,7 @@
 #include <map>
 #include <sstream>
 #include <algorithm>
+#include <cctype>
 
 // Để hiển thị tiếng Việt trên console Windows
 #ifdef _WIN32
@@ -143,6 +144,63 @@ std::string solve_token(const std::string& token) {
     return decoded_char;
 }
 
+std::string decode_escape_sequence(const std::string& str) {
+    if (str == "tab") {
+        return "\t";
+    }
+
+    std::string result;
+    for (size_t i = 0; i < str.length(); ++i) {
+        if (str[i] == '*' && i + 1 < str.length()) {
+            i++;
+            if (str[i] == 'n') result += '\n';
+            else if (str[i] == 't') result += '\t';
+            else if (str[i] == '\\' && i + 1 < str.length() && str[i + 1] == 'n') {
+                result += '\n';
+                i++;
+            } else {
+                result += str[i];
+            }
+        } else {
+            result += str[i];
+        }
+    }
+    return result;
+}
+
+std::vector<std::string> tokenize_input(const std::string& input) {
+    std::vector<std::string> tokens;
+    std::string current_token;
+    bool in_bracket = false;
+
+    for (size_t i = 0; i < input.length(); ++i) {
+        char c = input[i];
+
+        if (c == '[') {
+            in_bracket = true;
+            current_token += c;
+        } else if (c == ']') {
+            in_bracket = false;
+            current_token += c;
+            tokens.push_back(current_token);
+            current_token.clear();
+        } else if ((c == ' ' || c == ',' || c == '\t') && !in_bracket) {
+            if (!current_token.empty()) {
+                tokens.push_back(current_token);
+                current_token.clear();
+            }
+        } else {
+            current_token += c;
+        }
+    }
+
+    if (!current_token.empty()) {
+        tokens.push_back(current_token);
+    }
+
+    return tokens;
+}
+
 int main() {
     // Thiết lập để console có thể hiển thị UTF-8
     #ifdef _WIN32
@@ -153,31 +211,25 @@ int main() {
 
     initialize_maps();
 
-    std::string token;
-    // Vòng lặp đọc input thông minh hơn, có thể ghép các token bị tách bởi dấu cách
-    while (std::cin >> token) {
-        // Nếu một token có '[' nhưng không có ']', ghép nó với token tiếp theo
-        if (token.find('[') != std::string::npos && token.back() != ']') {
-            std::string next_token;
-            while (std::cin >> next_token) {
-                token += " " + next_token;
-                if (next_token.back() == ']') break;
+    std::string line;
+    while (std::getline(std::cin, line)) {
+        if (line.empty()) continue;
+
+        std::vector<std::string> tokens = tokenize_input(line);
+
+        for (const auto& token : tokens) {
+            if (token == "s0") {
+                std::cout << " ";
+            } else if (token.rfind("oth[", 0) == 0) {
+                std::string content = token.substr(4, token.length() - 5);
+                std::cout << decode_escape_sequence(content);
+            } else if (token[0] == 'c' && token.find('[') == std::string::npos) {
+                std::cout << token.substr(1);
+            } else if (token[0] == 's' || token[0] == 'c') {
+                std::cout << solve_token(token);
             }
         }
-
-        // Xử lý các loại token
-        if (token == "s0") {
-            std::cout << " ";
-        } else if (token.rfind("oth[", 0) == 0) { // Bắt đầu bằng "oth["
-            std::cout << token.substr(4, token.length() - 5);
-        } else if (token[0] == 'c') {
-            std::cout << token.substr(1, token.find('[') - 1);
-        } else if (token[0] == 's') {
-            std::cout << solve_token(token);
-        } else {
-            // In ra token không xác định nếu cần debug
-            // std::cout << "{" << token << "}";
-        }
+        std::cout << std::endl;
     }
     std::cout << std::endl;
 
