@@ -29,7 +29,7 @@ g++ encode_text.cpp -std=c++17 -O2 -o encode_text
 
 ## 📖 Bảng mã
 
-Xem chi tiết tại [char_solve.md](char_solve.md)
+Xem chi tiết tại [char solve.md](char solve.md)
 
 ---
 
