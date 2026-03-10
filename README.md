@@ -1,35 +1,54 @@
-# 🧠 BroLang (tạm đặt tên 😎)
+# 🧠 BroLang
 
-> Một ngôn ngữ mã hoá / giải mã ký tự kiểu “não to”,  
+> Một ngôn ngữ mã hoá / giải mã ký tự kiểu "não to",  
 > viết chữ tiếng Việt có dấu, code được cả C++ 😭🔥
 
-BroLang là một hệ mã hoá dạng token, trong đó:
-- `s<number>` đại diện cho chữ cái
-- `c<number>` đại diện cho chữ số
-- modifier trong `[]` để xử lý:
-  - viết hoa
-  - dấu tiếng Việt
-  - lặp ký tự
-- `oth[...]` dùng cho ký tự đặc biệt / escape sequence
+BroLang là một hệ mã hoá dạng token, trong đó mỗi ký tự được biểu diễn bằng một mã ngắn gọn. Hỗ trợ đầy đủ tiếng Việt có dấu, viết hoa, lặp ký tự, toán tử, và ký tự đặc biệt.
 
 ---
 
-## 📦 Cài đặt & Build
+## 📦 Build
 
 ### Yêu cầu
 - C++17 trở lên
-- Windows (khuyến nghị, vì xử lý UTF-8 console)
+- Linux / Windows (terminal hỗ trợ UTF-8)
 
-### Build
+### Decoder — BroLang → text
 ```bash
-g++ solve_text.cpp -std=gnu++17 -O2 -o solve_text_cpp
+g++ solve_text.cpp -std=c++17 -O2 -o solve_text
+./solve_text input.txt output.txt
 ```
+
+### Encoder — text → BroLang
+```bash
+g++ encode_text.cpp -std=c++17 -O2 -o encode_text
+./encode_text input.txt output.txt
+```
+
 ---
 
-## Dự định
-- phát triển thêm bản python
-- tạo run.bat cho windows
+## 📖 Bảng mã
+
+Xem chi tiết tại [char_solve.md](char_solve.md)
+
 ---
 
-## Hướng dẫn
-- [bảng mã](<char solve.md>)
+## 🧪 Ví dụ nhanh
+
+**Encode:**
+```
+Liễu Như Yên.  →  S(s12[cl],s9,s5[a2 a7],s21,s0,s14[cl],s8,s21[a3],s0,s25[cl],s5[a2],s14,s28)E
+```
+
+**Decode:**
+```
+S(s12[cl],s9,s5[a2 a7],s21,s0,s14[cl],s8,s21[a3],s0,s25[cl],s5[a2],s14,s28)E  →  Liễu Như Yên.
+```
+
+---
+
+## 🗺️ Dự định
+
+- [ ] Bản Python
+- [ ] `run.bat` cho Windows
+- [ ] Interactive REPL
