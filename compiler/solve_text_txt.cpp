@@ -13,6 +13,7 @@ using namespace std;
 map<string, string> base_map;
 map<char, map<string, string>> diacritic_map;
 map<string, map<string, string>> tone_map;
+map<string, string> t_map; // t0-t7: toán tử đơn
 
 void initialize_maps() {
     // Ký tự a-z: s1→a ... s26→z
@@ -62,6 +63,17 @@ void initialize_maps() {
     add_tones("u", "ú", "ù", "ủ", "ũ", "ụ"); add_tones("U", "Ú", "Ù", "Ủ", "Ũ", "Ụ");
     add_tones("ư", "ứ", "ừ", "ử", "ữ", "ự"); add_tones("Ư", "Ứ", "Ừ", "Ử", "Ữ", "Ự");
     add_tones("y", "ý", "ỳ", "ỷ", "ỹ", "ỵ"); add_tones("Y", "Ý", "Ỳ", "Ỷ", "Ỹ", "Ỵ");
+    // Toán tử: t0–t7
+    t_map["t0"] = "=";
+    t_map["t1"] = "+";
+    t_map["t2"] = "-";
+    t_map["t3"] = "*";
+    t_map["t4"] = "/";
+    t_map["t5"] = "^";
+    t_map["t6"] = "//";
+    t_map["t7"] = "%";
+    // t8 xử lý riêng (bọc ngoặc)
+
 }
 
 // Giải mã chuỗi escape trong oth[...]
@@ -278,6 +290,19 @@ string decode_block(const string& content) {
             }
         } else if (!token.empty() && (token[0] == 's' || token[0] == 'c')) {
             result += solve_token(token);
+        // Token toán tử: t0-t7 (đơn), t8[...] (bọc ngoặc)
+        } else if (!token.empty() && token[0] == 't' && token.length() > 1 && isdigit(token[1])) {
+            size_t br = token.find('[');
+            string t_code = token.substr(0, br == string::npos ? token.length() : br);
+            if (t_code == "t8") {
+                // t8[a,b,c,...] → (nội_dung)
+                if (br != string::npos && token.back() == ']') {
+                    string inner = token.substr(br + 1, token.length() - br - 2);
+                    result += "(" + decode_block(inner) + ")";
+                }
+            } else if (t_map.count(t_code)) {
+                result += t_map.at(t_code);
+            }
         }
         // Bỏ qua các token không nhận ra
     }

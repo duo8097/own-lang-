@@ -1,4 +1,6 @@
 s1  → a; s2  → b; s3  → c; s4  → d; s5  → e; s6  → f; s7  → g; s8  → h; s9  → i; s10 → j; s11 → k;	s12 → l; s13 → m; s14 → n; s15 → o; s16 → p; s17 → q; s18 → r; s19 → s; s20 → t; s21 → u; s22 → v;	s23 → w; s24 → x; s25 → y; s26 → z
+s27: ,
+s28: .
 
 c1 → 1 ... c9 → 9
 a0 → đ
@@ -12,10 +14,20 @@ a5: huyền
 a6: hỏi
 a7: ngã
 a8: nặng
-a9: ,
-a10: .
 
+t0: =
+t1: +
+t2: -
+t3: *
+t4: /
+t5: ^
+t6: //
+t7: %
+t8:()
+vd: S(t8[c1,t1,c1,t0,c2])E
+	->(1+1=2)
 S(<code>)E: Bắt đầu & kết 
+
 []: dạng format
 	vd: S(s4[cl a0 2] s21[a3 2] s15[a2 2])E = ĐĐ ưư ôô
 oth: mấy dấu khác (*:là nhấn phím tương ứng)
